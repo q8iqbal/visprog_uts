@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="iqbaldbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Mahasiswa">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nama" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="nrp" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="jurusan" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mahasiswa_MataKuliah">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mahasiswa_id" Type="bigint" Nullable="false" />
+          <Property Name="matakuliah_id" Type="bigint" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MataKuliah">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="judul" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="sks" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="harga" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="Mahasiswa_MataKuliah_FK">
+          <End Role="Mahasiswa" Type="Self.Mahasiswa" Multiplicity="1" />
+          <End Role="Mahasiswa_MataKuliah" Type="Self.Mahasiswa_MataKuliah" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mahasiswa">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Mahasiswa_MataKuliah">
+              <PropertyRef Name="mahasiswa_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Mahasiswa_MataKuliah_FK_1">
+          <End Role="MataKuliah" Type="Self.MataKuliah" Multiplicity="1" />
+          <End Role="Mahasiswa_MataKuliah" Type="Self.Mahasiswa_MataKuliah" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MataKuliah">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Mahasiswa_MataKuliah">
+              <PropertyRef Name="matakuliah_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="iqbaldbModelStoreContainer">
+          <EntitySet Name="Mahasiswa" EntityType="Self.Mahasiswa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mahasiswa_MataKuliah" EntityType="Self.Mahasiswa_MataKuliah" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MataKuliah" EntityType="Self.MataKuliah" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Mahasiswa_MataKuliah_FK" Association="Self.Mahasiswa_MataKuliah_FK">
+            <End Role="Mahasiswa" EntitySet="Mahasiswa" />
+            <End Role="Mahasiswa_MataKuliah" EntitySet="Mahasiswa_MataKuliah" />
+          </AssociationSet>
+          <AssociationSet Name="Mahasiswa_MataKuliah_FK_1" Association="Self.Mahasiswa_MataKuliah_FK_1">
+            <End Role="MataKuliah" EntitySet="MataKuliah" />
+            <End Role="Mahasiswa_MataKuliah" EntitySet="Mahasiswa_MataKuliah" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="iqbaldbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Mahasiswa">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nama" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nrp" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="jurusan" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Mahasiswa_MataKuliah" Relationship="Self.Mahasiswa_MataKuliah_FK" FromRole="Mahasiswa" ToRole="Mahasiswa_MataKuliah" />
+        </EntityType>
+        <EntityType Name="Mahasiswa_MataKuliah">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mahasiswa_id" Type="Int64" Nullable="false" />
+          <Property Name="matakuliah_id" Type="Int64" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Mahasiswa" Relationship="Self.Mahasiswa_MataKuliah_FK" FromRole="Mahasiswa_MataKuliah" ToRole="Mahasiswa" />
+          <NavigationProperty Name="MataKuliah" Relationship="Self.Mahasiswa_MataKuliah_FK_1" FromRole="Mahasiswa_MataKuliah" ToRole="MataKuliah" />
+        </EntityType>
+        <EntityType Name="MataKuliah">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="judul" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sks" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="harga" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Mahasiswa_MataKuliah" Relationship="Self.Mahasiswa_MataKuliah_FK_1" FromRole="MataKuliah" ToRole="Mahasiswa_MataKuliah" />
+        </EntityType>
+        <Association Name="Mahasiswa_MataKuliah_FK">
+          <End Role="Mahasiswa" Type="Self.Mahasiswa" Multiplicity="1" />
+          <End Role="Mahasiswa_MataKuliah" Type="Self.Mahasiswa_MataKuliah" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mahasiswa">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Mahasiswa_MataKuliah">
+              <PropertyRef Name="mahasiswa_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Mahasiswa_MataKuliah_FK_1">
+          <End Role="MataKuliah" Type="Self.MataKuliah" Multiplicity="1" />
+          <End Role="Mahasiswa_MataKuliah" Type="Self.Mahasiswa_MataKuliah" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MataKuliah">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Mahasiswa_MataKuliah">
+              <PropertyRef Name="matakuliah_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="iqbaldbEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Mahasiswas" EntityType="Self.Mahasiswa" />
+          <EntitySet Name="Mahasiswa_MataKuliah" EntityType="Self.Mahasiswa_MataKuliah" />
+          <EntitySet Name="MataKuliahs" EntityType="Self.MataKuliah" />
+          <AssociationSet Name="Mahasiswa_MataKuliah_FK" Association="Self.Mahasiswa_MataKuliah_FK">
+            <End Role="Mahasiswa" EntitySet="Mahasiswas" />
+            <End Role="Mahasiswa_MataKuliah" EntitySet="Mahasiswa_MataKuliah" />
+          </AssociationSet>
+          <AssociationSet Name="Mahasiswa_MataKuliah_FK_1" Association="Self.Mahasiswa_MataKuliah_FK_1">
+            <End Role="MataKuliah" EntitySet="MataKuliahs" />
+            <End Role="Mahasiswa_MataKuliah" EntitySet="Mahasiswa_MataKuliah" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="iqbaldbModelStoreContainer" CdmEntityContainer="iqbaldbEntities2">
+          <EntitySetMapping Name="Mahasiswas">
+            <EntityTypeMapping TypeName="iqbaldbModel.Mahasiswa">
+              <MappingFragment StoreEntitySet="Mahasiswa">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nama" ColumnName="nama" />
+                <ScalarProperty Name="nrp" ColumnName="nrp" />
+                <ScalarProperty Name="jurusan" ColumnName="jurusan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mahasiswa_MataKuliah">
+            <EntityTypeMapping TypeName="iqbaldbModel.Mahasiswa_MataKuliah">
+              <MappingFragment StoreEntitySet="Mahasiswa_MataKuliah">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="mahasiswa_id" ColumnName="mahasiswa_id" />
+                <ScalarProperty Name="matakuliah_id" ColumnName="matakuliah_id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MataKuliahs">
+            <EntityTypeMapping TypeName="iqbaldbModel.MataKuliah">
+              <MappingFragment StoreEntitySet="MataKuliah">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="judul" ColumnName="judul" />
+                <ScalarProperty Name="sks" ColumnName="sks" />
+                <ScalarProperty Name="harga" ColumnName="harga" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
